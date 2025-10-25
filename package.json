@@ -1,0 +1,57 @@
+{
+    "$schema": "http://json.schemastore.org/package",
+    "name": "@kayahr/ts-json-schema-generator",
+    "version": "2.4.0-bundle.1",
+    "type": "module",
+    "description": "A drop-in replacement for ts-json-schema-generator, bundling the tool and all its dependencies into a single module",
+    "keywords": [
+        "json",
+        "schema",
+        "typescript",
+        "json schema",
+        "generator",
+        "no dependencies",
+        "bundle"
+    ],
+    "license": "MIT",
+    "author": {
+        "name": "Klaus Reimer",
+        "email": "k@ailis.de"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kayahr/ts-json-schema-generator.git"
+    },
+    "homepage": "https://github.com/kayahr/ts-json-schema-generator",
+    "bugs": "https://github.com/kayahr/ts-json-schema-generator/issues",
+    "funding": "https://github.com/kayahr/ts-json-schema-generator?sponsor=1",
+    "publishConfig": {
+        "access": "public"
+    },
+    "files": [
+        "lib"
+    ],
+    "bin": {
+        "ts-json-schema-generator": "lib/ts-json-schema-generator.mjs"
+    },
+    "scripts": {
+        "clean": "rm -rf lib",
+        "build": "node build.js",
+        "test": "run test:*",
+        "test:unit": "ntest",
+        "test:cspell": "cspell",
+        "prepare": "run clean build",
+        "start": "node lib/ts-json-schema-generator.mjs"
+    },
+    "devDependencies": {
+        "@kayahr/cspell": "9.2.1-bundle.2",
+        "@kayahr/npm-utils": "1.1.0",
+        "@kayahr/ntest": "1.1.0",
+        "esbuild": "0.25.11",
+        "esbuild-plugin-license": "1.2.3",
+        "ts-json-schema-generator": "2.4.0"
+    },
+    "dependencies": {
+        "typescript": "^5.9.3"
+    }
+}
