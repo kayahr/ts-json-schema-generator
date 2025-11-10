@@ -47,7 +47,7 @@
         "@kayahr/cspell": "9.2.2-bundle.1",
         "@kayahr/npm-utils": "1.1.1",
         "@kayahr/ntest": "1.2.2",
-        "esbuild": "0.25.12",
+        "esbuild": "0.27.0",
         "esbuild-plugin-license": "1.2.3",
         "ts-json-schema-generator": "2.4.0"
     },
