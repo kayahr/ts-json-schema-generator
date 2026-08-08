@@ -1,5 +1,6 @@
-import { join } from "node:path";
+import { basename, join } from "node:path";
 import esbuild from "esbuild";
+import esbuildCopyStaticFiles from "esbuild-copy-static-files";
 import esbuildPluginLicense from "esbuild-plugin-license";
 
 const outdir = "lib";
@@ -28,9 +29,6 @@ const require = ___createRequire(import.meta.url);`;
 await esbuild.build({
     entryPoints: [ "./node_modules/ts-json-schema-generator/dist/ts-json-schema-generator.js" ],
     outfile,
-    external: [
-        "typescript"
-    ],
     platform: "node",
     target: "node20",
     format: "esm",
@@ -57,6 +55,13 @@ await esbuild.build({
                     }
                 }
             }
-       })
+       }),
+        esbuildCopyStaticFiles({
+            src: "node_modules/typescript/lib",
+            dest: "lib",
+            filter: filename => basename(filename) === "lib"
+                || /^lib(?:\..*)?\.d\.ts$/.test(basename(filename)),
+            recursive: true,
+        })
     ]
 });

@@ -1,13 +1,21 @@
 import { afterEach, beforeEach, describe, it } from "node:test";
 import assert from "node:assert";
-import { mkdtemp, cp, mkdir, writeFile, rm } from "node:fs/promises";
+import { mkdtemp, cp, mkdir, readFile, writeFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { exec } from "node:child_process";
 import { promisify } from "node:util";
 
-const execAsync = promisify(exec);
+const rawExecAsync = promisify(exec);
 const tmpPrefix = join(tmpdir(), "@kayahr-ts-json-schema-generator-");
+
+async function execAsync(command, options) {
+    await rawExecAsync(`${command} > stdout.txt 2> stderr.txt`, options);
+    return {
+        stdout: await readFile(join(options.cwd, "stdout.txt"), "utf8"),
+        stderr: await readFile(join(options.cwd, "stderr.txt"), "utf8")
+    };
+}
 
 describe("ts-json-schema-generator", () => {
     let tmpDir;
@@ -20,9 +28,6 @@ describe("ts-json-schema-generator", () => {
         const binDir = join(tmpDir, "bin");
         await mkdir(binDir);
         await cp("lib", binDir, { recursive: true });
-
-        // Install typescript
-        await execAsync("npm install typescript", { cwd: tmpDir });
     });
 
     afterEach(async () => {
